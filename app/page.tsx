@@ -1,57 +1,127 @@
 import { NextResponse } from "next/server";
 
+
 export async function GET() {
 
-  const url = process.env.IPTV_LIST_1;
+
+const playlistUrl = process.env.IPTV_M3U_URL;
 
 
-  if (!url) {
-    return new NextResponse(
-      "Playlist missing",
-      { status: 500 }
-    );
-  }
+if(!playlistUrl){
+
+return NextResponse.json(
+{
+error:"Missing IPTV playlist"
+},
+{
+status:500
+}
+);
+
+}
 
 
-  try {
 
-    const response = await fetch(url, {
-      cache: "no-store"
-    });
+try{
 
 
-    if (!response.ok) {
-
-      return new NextResponse(
-        "Playlist error",
-        { status: 500 }
-      );
-
-    }
+const response = await fetch(
+playlistUrl,
+{
+cache:"no-store"
+}
+);
 
 
-    const playlist = await response.text();
+const data = await response.text();
 
 
-    return new NextResponse(
-      playlist,
-      {
-        headers:{
-          "Content-Type":"text/plain"
-        }
-      }
-    );
+
+const lines=data.split("\n");
 
 
-  } catch(error){
+const channels:any[]=[];
 
 
-    return new NextResponse(
-      "Connection failed",
-      { status:500 }
-    );
+for(let i=0;i<lines.length;i++){
 
 
-  }
+if(lines[i].startsWith("#EXTINF")){
+
+
+const info=lines[i];
+
+
+const name =
+info.split(",").pop()?.trim()
+|| "Unknown";
+
+
+
+const group =
+info.match(/group-title="([^"]+)"/)
+?.[1]
+|| "Other";
+
+
+
+const logo =
+info.match(/tvg-logo="([^"]+)"/)
+?.[1]
+|| "";
+
+
+
+const url =
+lines[i+1]?.trim();
+
+
+
+if(url){
+
+
+channels.push({
+
+name,
+
+category:group,
+
+logo,
+
+url
+
+});
+
+
+}
+
+
+
+}
+
+
+}
+
+
+
+return NextResponse.json(channels);
+
+
+
+}catch(e){
+
+
+return NextResponse.json(
+{
+error:"Playlist failed"
+},
+{
+status:500
+}
+);
+
+
+}
+
 
 }
