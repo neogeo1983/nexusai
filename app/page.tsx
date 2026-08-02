@@ -21,7 +21,7 @@ const [selected,setSelected]=useState<Channel|null>(null);
 
 useEffect(()=>{
 
-fetch("/playlist.m3u")
+fetch("/api/playlist")
 .then(res=>res.text())
 .then(data=>{
 
