@@ -1,139 +1,196 @@
-"use client";
+import Link from "next/link";
 
-import { useState } from "react";
-
-export default function Assistant() {
-
-  const [message, setMessage] = useState("");
-  const [chat, setChat] = useState([
-    {
-      role: "ai",
-      text: "Hello! I am NexusAI Assistant. How can I help you today?"
-    }
-  ]);
-
-
-  function sendMessage() {
-
-    if (!message.trim()) return;
-
-
-    const userMessage = {
-      role: "user",
-      text: message
-    };
-
-
-    let answer =
-      "I am NexusAI Assistant. I can help with AI solutions, automation, websites and technology.";
-
-
-    if (message.toLowerCase().includes("website")) {
-      answer =
-        "NexusAI creates modern websites using Next.js, AI tools and automation.";
-    }
-
-
-    if (message.toLowerCase().includes("ai")) {
-      answer =
-        "Artificial Intelligence can help businesses automate tasks and improve productivity.";
-    }
-
-
-    setChat([
-      ...chat,
-      userMessage,
-      {
-        role: "ai",
-        text: answer
-      }
-    ]);
-
-
-    setMessage("");
-
-  }
-
-
-
+export default function Home() {
   return (
+    <main className="min-h-screen bg-black text-white">
 
-    <main className="min-h-screen bg-black text-white p-6">
+      {/* Header */}
+      <header className="flex justify-between items-center px-10 py-6 border-b border-gray-800">
 
-      <h1 className="text-4xl font-bold text-center mb-8">
-        Nexus<span className="text-blue-500">AI</span> Assistant
-      </h1>
+        <h1 className="text-3xl font-bold">
+          Nexus<span className="text-blue-500">AI</span>
+        </h1>
+
+        <nav className="flex gap-6 text-gray-300">
+          <Link href="/">Dashboard</Link>
+          <Link href="/assistant">AI Assistant</Link>
+        </nav>
+
+      </header>
 
 
-      <div className="max-w-3xl mx-auto bg-gray-900 rounded-2xl p-6">
+      {/* Welcome */}
+      <section className="text-center py-16 px-6">
+
+        <h2 className="text-5xl font-bold">
+          Welcome to NexusAI
+        </h2>
+
+        <p className="mt-5 text-gray-400 text-xl">
+          Your intelligent platform for AI solutions,
+          automation and digital innovation.
+        </p>
+
+      </section>
 
 
-        <div className="h-[500px] overflow-y-auto space-y-4">
+
+      {/* Dashboard Cards */}
+      <section className="grid md:grid-cols-3 gap-8 px-10 pb-20">
 
 
-          {chat.map((item,index)=>(
+        <Link href="/assistant">
 
-            <div
-              key={index}
-              className={
-                item.role==="user"
-                ?
-                "bg-blue-600 p-4 rounded-xl ml-auto max-w-md"
-                :
-                "bg-gray-800 p-4 rounded-xl max-w-md"
-              }
-            >
+          <div className="cursor-pointer bg-gray-900 border border-gray-800 rounded-3xl p-8 hover:border-blue-500 transition">
 
-              {item.text}
-
+            <div className="text-5xl mb-5">
+              🤖
             </div>
 
-          ))}
+            <h3 className="text-2xl font-bold">
+              AI Assistant
+            </h3>
+
+            <p className="mt-3 text-gray-400">
+              Chat with your intelligent AI assistant.
+              Get answers, ideas and solutions.
+            </p>
+
+          </div>
+
+        </Link>
 
 
-        </div>
+
+
+        <Link href="#">
+
+          <div className="cursor-pointer bg-gray-900 border border-gray-800 rounded-3xl p-8 hover:border-blue-500 transition">
+
+            <div className="text-5xl mb-5">
+              ⚡
+            </div>
+
+            <h3 className="text-2xl font-bold">
+              Automation
+            </h3>
+
+            <p className="mt-3 text-gray-400">
+              Automate repetitive business tasks
+              and improve productivity.
+            </p>
+
+          </div>
+
+        </Link>
 
 
 
-        <div className="flex gap-3 mt-6">
-
-          <input
-
-            value={message}
-
-            onChange={(e)=>setMessage(e.target.value)}
-
-            onKeyDown={(e)=>{
-              if(e.key==="Enter") sendMessage()
-            }}
-
-            placeholder="Ask NexusAI something..."
-
-            className="flex-1 bg-black border border-gray-700 rounded-xl px-4 py-3"
-
-          />
 
 
-          <button
+        <Link href="#">
 
-            onClick={sendMessage}
+          <div className="cursor-pointer bg-gray-900 border border-gray-800 rounded-3xl p-8 hover:border-blue-500 transition">
 
-            className="bg-blue-600 px-6 rounded-xl hover:bg-blue-700"
+            <div className="text-5xl mb-5">
+              🌐
+            </div>
 
-          >
+            <h3 className="text-2xl font-bold">
+              Web Studio
+            </h3>
 
-            Send
+            <p className="mt-3 text-gray-400">
+              Create modern websites and
+              digital experiences.
+            </p>
 
-          </button>
+          </div>
+
+        </Link>
 
 
-        </div>
 
 
-      </div>
+
+        <Link href="#">
+
+          <div className="cursor-pointer bg-gray-900 border border-gray-800 rounded-3xl p-8 hover:border-blue-500 transition">
+
+            <div className="text-5xl mb-5">
+              📊
+            </div>
+
+            <h3 className="text-2xl font-bold">
+              Analytics
+            </h3>
+
+            <p className="mt-3 text-gray-400">
+              Monitor performance and insights.
+            </p>
+
+          </div>
+
+        </Link>
+
+
+
+
+        <Link href="#">
+
+          <div className="cursor-pointer bg-gray-900 border border-gray-800 rounded-3xl p-8 hover:border-blue-500 transition">
+
+            <div className="text-5xl mb-5">
+              📁
+            </div>
+
+            <h3 className="text-2xl font-bold">
+              Projects
+            </h3>
+
+            <p className="mt-3 text-gray-400">
+              Manage your AI projects.
+            </p>
+
+          </div>
+
+        </Link>
+
+
+
+
+        <Link href="#">
+
+          <div className="cursor-pointer bg-gray-900 border border-gray-800 rounded-3xl p-8 hover:border-blue-500 transition">
+
+            <div className="text-5xl mb-5">
+              ⚙️
+            </div>
+
+            <h3 className="text-2xl font-bold">
+              Settings
+            </h3>
+
+            <p className="mt-3 text-gray-400">
+              Configure your NexusAI platform.
+            </p>
+
+          </div>
+
+        </Link>
+
+
+
+      </section>
+
+
+      <footer className="border-t border-gray-800 text-center py-8 text-gray-500">
+
+        NexusAI © 2026
+
+      </footer>
 
 
     </main>
-
   );
 }
