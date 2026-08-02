@@ -1,255 +1,240 @@
-import Link from "next/link";
+"use client";
 
-export default function Home() {
-  return (
-    <main className="min-h-screen bg-black text-white">
+import { useEffect, useRef, useState } from "react";
+import Hls from "hls.js";
 
-      {/* HEADER */}
 
-      <header className="p-6 flex justify-between items-center border-b border-gray-800">
+export default function Player() {
 
-        <h1 className="text-4xl font-bold">
-          <span className="text-red-600">Neon</span>-IPTV
-        </h1>
+  const videoRef = useRef<HTMLVideoElement | null>(null);
 
+  const [channels, setChannels] = useState<any[]>([]);
+  const [current, setCurrent] = useState<any>(null);
 
-        <nav className="flex gap-4">
 
-          <Link
-            href="/channels"
-            className="bg-red-600 px-5 py-2 rounded-xl hover:bg-red-700"
-          >
-            Channels
-          </Link>
 
+  useEffect(() => {
 
-          <Link
-            href="/player"
-            className="bg-gray-800 px-5 py-2 rounded-xl hover:bg-gray-700"
-          >
-            Player
-          </Link>
+    fetch("/api/iptv")
+      .then(res => res.json())
+      .then(data => {
 
+        setChannels(data);
 
-        </nav>
+        if(data.length){
+          setCurrent(data[0]);
+        }
 
+      });
 
-      </header>
+  }, []);
 
 
 
-      {/* HERO */}
 
 
-      <section className="text-center py-20 px-5">
+  useEffect(() => {
 
 
-        <h2 className="text-6xl font-bold mb-6">
+    if(!current || !videoRef.current) return;
 
-          Televiziune online
-          <br />
 
-          <span className="text-red-600">
-            Neon IPTV
-          </span>
+    const video = videoRef.current;
 
-        </h2>
 
+    if(Hls.isSupported()) {
 
 
-        <p className="text-gray-400 text-xl max-w-2xl mx-auto">
+      const hls = new Hls({
 
-          Urmărește canalele preferate într-o experiență
-          modernă, rapidă și compatibilă cu orice dispozitiv.
+        enableWorker:true,
+        lowLatencyMode:true
 
-        </p>
+      });
 
 
+      hls.loadSource(current.url);
 
-        <div className="mt-10 flex justify-center gap-5">
+      hls.attachMedia(video);
 
 
-          <Link
+      hls.on(Hls.Events.MANIFEST_PARSED,()=>{
 
-          href="/channels"
+        video.play().catch(()=>{});
 
-          className="bg-red-600 px-8 py-4 rounded-2xl text-xl font-bold"
+      });
 
-          >
 
-            📺 Vezi Canale
+      return ()=>{
 
-          </Link>
+        hls.destroy();
 
+      };
 
 
-          <Link
+    }
 
-          href="/movies"
+    else if(video.canPlayType("application/vnd.apple.mpegurl")){
 
-          className="bg-gray-800 px-8 py-4 rounded-2xl text-xl font-bold"
 
-          >
+      video.src=current.url;
 
-            🎬 Filme Online
 
-          </Link>
+    }
 
 
 
-        </div>
+  },[current]);
 
 
-      </section>
 
 
 
+return (
 
-      {/* FEATURES */}
+<main className="min-h-screen bg-black text-white p-6">
 
 
-      <section className="grid md:grid-cols-3 gap-6 p-8">
+<h1 className="text-5xl font-bold mb-6">
 
+<span className="text-red-600">
+Neon
+</span>-IPTV
 
-        <div className="bg-gray-900 p-8 rounded-3xl">
+</h1>
 
-          <h3 className="text-2xl font-bold mb-3">
 
-            📺 Live TV
 
-          </h3>
 
-          <p className="text-gray-400">
+<div className="grid lg:grid-cols-4 gap-6">
 
-            Canale organizate pe categorii cu player integrat.
 
-          </p>
 
-        </div>
+<div className="bg-gray-900 rounded-3xl p-4 h-[700px] overflow-y-auto">
 
 
+<h2 className="text-2xl mb-5">
 
+📺 Canale
 
-        <div className="bg-gray-900 p-8 rounded-3xl">
+</h2>
 
-          <h3 className="text-2xl font-bold mb-3">
 
-            🎬 Filme
 
-          </h3>
+{
 
-          <p className="text-gray-400">
+channels.map((ch,index)=>(
 
-            Secțiune dedicată pentru conținut video.
 
-          </p>
+<button
 
-        </div>
+key={index}
 
+onClick={()=>setCurrent(ch)}
 
+className={`w-full flex items-center gap-3 p-3 mb-3 rounded-xl 
+${current?.name===ch.name 
+?"bg-red-600"
+:"bg-gray-800 hover:bg-gray-700"}`}
 
 
+>
 
-        <div className="bg-gray-900 p-8 rounded-3xl">
 
-          <h3 className="text-2xl font-bold mb-3">
+{
 
-            🤖 AI Assistant
+ch.logo &&
 
-          </h3>
+<img
 
-          <p className="text-gray-400">
+src={ch.logo}
 
-            Asistent inteligent pentru utilizatori.
+className="w-12 h-12 object-contain rounded"
 
-          </p>
+/>
 
-        </div>
+}
 
 
 
-      </section>
+<span>
 
+{ch.name}
 
+</span>
 
 
+</button>
 
-      {/* PRICING */}
 
+))
 
-      <section className="p-8 text-center">
 
+}
 
-        <h2 className="text-4xl font-bold mb-6">
 
-          Abonamente
 
-        </h2>
+</div>
 
 
 
-        <div className="bg-gray-900 rounded-3xl p-8 max-w-md mx-auto">
 
 
-          <h3 className="text-3xl font-bold">
 
-            Premium
 
-          </h3>
+<div className="lg:col-span-3 bg-gray-900 rounded-3xl p-5">
 
 
-          <p className="text-5xl font-bold text-red-600 mt-5">
 
-            10€
+<video
 
-          </p>
+ref={videoRef}
 
+controls
 
-          <p className="text-gray-400">
+autoPlay
 
-            lunar
+className="w-full aspect-video bg-black rounded-2xl"
 
-          </p>
+/>
 
 
-          <p className="mt-5">
 
-            sau 90€ anual
+{
 
-          </p>
+current &&
 
+<div className="mt-5">
 
+<h2 className="text-3xl font-bold">
 
-          <Link
+{current.name}
 
-          href="/pricing"
+</h2>
 
-          className="block mt-6 bg-red-600 p-4 rounded-xl"
 
-          >
+<p className="text-gray-400">
 
-            Vezi oferta
+{current.group}
 
-          </Link>
+</p>
 
 
-        </div>
+</div>
 
+}
 
-      </section>
 
 
+</div>
 
 
 
-      <footer className="text-center p-6 text-gray-500">
+</div>
 
-        © Neon-IPTV
 
-      </footer>
+</main>
 
+);
 
-
-    </main>
-  );
 }
