@@ -1,183 +1,139 @@
-import Link from "next/link";
+"use client";
 
-export default function Home() {
+import { useState } from "react";
+
+export default function Assistant() {
+
+  const [message, setMessage] = useState("");
+  const [chat, setChat] = useState([
+    {
+      role: "ai",
+      text: "Hello! I am NexusAI Assistant. How can I help you today?"
+    }
+  ]);
+
+
+  function sendMessage() {
+
+    if (!message.trim()) return;
+
+
+    const userMessage = {
+      role: "user",
+      text: message
+    };
+
+
+    let answer =
+      "I am NexusAI Assistant. I can help with AI solutions, automation, websites and technology.";
+
+
+    if (message.toLowerCase().includes("website")) {
+      answer =
+        "NexusAI creates modern websites using Next.js, AI tools and automation.";
+    }
+
+
+    if (message.toLowerCase().includes("ai")) {
+      answer =
+        "Artificial Intelligence can help businesses automate tasks and improve productivity.";
+    }
+
+
+    setChat([
+      ...chat,
+      userMessage,
+      {
+        role: "ai",
+        text: answer
+      }
+    ]);
+
+
+    setMessage("");
+
+  }
+
+
+
   return (
-    <main className="min-h-screen bg-black text-white">
 
-      {/* Header */}
-      <header className="flex items-center justify-between px-8 py-6 border-b border-gray-800">
-        <h1 className="text-3xl font-bold">
-          Nexus<span className="text-blue-500">AI</span>
-        </h1>
+    <main className="min-h-screen bg-black text-white p-6">
 
-        <nav className="flex gap-6 text-gray-300">
-          <Link href="/">Home</Link>
-          <Link href="#services">Services</Link>
-          <Link href="#about">About</Link>
-          <Link href="#contact">Contact</Link>
-        </nav>
-      </header>
+      <h1 className="text-4xl font-bold text-center mb-8">
+        Nexus<span className="text-blue-500">AI</span> Assistant
+      </h1>
 
 
-      {/* Hero */}
-      <section className="text-center px-6 py-24">
-
-        <h2 className="text-5xl md:text-7xl font-bold">
-          Intelligent Solutions
-          <br />
-          Powered by
-          <span className="text-blue-500"> AI</span>
-        </h2>
-
-        <p className="max-w-3xl mx-auto mt-8 text-xl text-gray-400">
-          NexusAI builds modern artificial intelligence solutions,
-          automation systems and digital experiences for businesses.
-        </p>
+      <div className="max-w-3xl mx-auto bg-gray-900 rounded-2xl p-6">
 
 
-        <div className="mt-10 flex justify-center gap-5">
-
-          <Link href="#contact">
-            <button className="bg-blue-600 px-8 py-3 rounded-xl hover:bg-blue-700">
-              Start Project
-            </button>
-          </Link>
+        <div className="h-[500px] overflow-y-auto space-y-4">
 
 
-          <Link href="#services">
-            <button className="border border-gray-700 px-8 py-3 rounded-xl hover:bg-gray-900">
-              Explore Services
-            </button>
-          </Link>
+          {chat.map((item,index)=>(
 
-        </div>
+            <div
+              key={index}
+              className={
+                item.role==="user"
+                ?
+                "bg-blue-600 p-4 rounded-xl ml-auto max-w-md"
+                :
+                "bg-gray-800 p-4 rounded-xl max-w-md"
+              }
+            >
 
+              {item.text}
 
-        <img
-          src="https://images.unsplash.com/photo-1677442136019-21780ecad995"
-          alt="Artificial Intelligence"
-          className="rounded-3xl mt-16 mx-auto max-w-4xl"
-        />
+            </div>
 
-      </section>
-
-
-
-      {/* Services */}
-      <section id="services" className="px-8 py-20">
-
-        <h2 className="text-4xl font-bold text-center mb-12">
-          Our Services
-        </h2>
-
-
-        <div className="grid md:grid-cols-3 gap-8">
-
-
-          <div className="bg-gray-900 p-8 rounded-2xl">
-            <h3 className="text-2xl font-bold">
-              🤖 AI Assistants
-            </h3>
-
-            <p className="mt-4 text-gray-400">
-              Smart AI assistants that help companies automate
-              communication and improve productivity.
-            </p>
-          </div>
-
-
-
-          <div className="bg-gray-900 p-8 rounded-2xl">
-
-            <h3 className="text-2xl font-bold">
-              ⚡ Automation
-            </h3>
-
-            <p className="mt-4 text-gray-400">
-              Intelligent workflows that reduce repetitive tasks
-              and save valuable time.
-            </p>
-
-          </div>
-
-
-
-          <div className="bg-gray-900 p-8 rounded-2xl">
-
-            <h3 className="text-2xl font-bold">
-              🌐 Web Development
-            </h3>
-
-            <p className="mt-4 text-gray-400">
-              Modern websites and applications built with
-              advanced technology.
-            </p>
-
-          </div>
+          ))}
 
 
         </div>
 
-      </section>
 
 
+        <div className="flex gap-3 mt-6">
+
+          <input
+
+            value={message}
+
+            onChange={(e)=>setMessage(e.target.value)}
+
+            onKeyDown={(e)=>{
+              if(e.key==="Enter") sendMessage()
+            }}
+
+            placeholder="Ask NexusAI something..."
+
+            className="flex-1 bg-black border border-gray-700 rounded-xl px-4 py-3"
+
+          />
 
 
-      {/* About */}
-      <section id="about" className="px-8 py-20 bg-gray-950">
+          <button
 
-        <h2 className="text-4xl font-bold">
-          About NexusAI
-        </h2>
+            onClick={sendMessage}
 
-        <p className="mt-6 text-gray-400 max-w-3xl">
+            className="bg-blue-600 px-6 rounded-xl hover:bg-blue-700"
 
-          NexusAI combines artificial intelligence,
-          software engineering and automation to create
-          digital solutions for the future.
+          >
 
-        </p>
+            Send
 
-      </section>
+          </button>
 
 
+        </div>
 
 
-      {/* Contact */}
-      <section id="contact" className="px-8 py-20">
-
-        <h2 className="text-4xl font-bold">
-          Contact Us
-        </h2>
-
-
-        <p className="mt-5 text-gray-400">
-          Ready to build your AI solution?
-        </p>
-
-
-        <a
-          href="mailto:contact@nexusai.com"
-          className="inline-block mt-8 bg-blue-600 px-8 py-3 rounded-xl"
-        >
-          Send Email
-        </a>
-
-
-      </section>
-
-
-
-
-      {/* Footer */}
-
-      <footer className="border-t border-gray-800 py-8 text-center text-gray-500">
-
-        © 2026 NexusAI. All rights reserved.
-
-      </footer>
+      </div>
 
 
     </main>
+
   );
 }
