@@ -4,189 +4,139 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-black text-white">
 
-      {/* Header */}
-      <header className="flex justify-between items-center px-10 py-6 border-b border-gray-800">
+      {/* HEADER */}
+      <header className="flex items-center justify-between px-8 py-6 border-b border-gray-800">
 
         <h1 className="text-3xl font-bold">
-          Nexus<span className="text-blue-500">AI</span>
+          IPTV<span className="text-red-500">PLUS</span>
         </h1>
 
         <nav className="flex gap-6 text-gray-300">
-          <Link href="/">Dashboard</Link>
-          <Link href="/assistant">AI Assistant</Link>
+          <Link href="/">Home</Link>
+          <Link href="/channels">Channels</Link>
+          <Link href="/pricing">Plans</Link>
+          <Link href="/contact">Contact</Link>
         </nav>
 
       </header>
 
 
-      {/* Welcome */}
-      <section className="text-center py-16 px-6">
+      {/* HERO */}
 
-        <h2 className="text-5xl font-bold">
-          Welcome to NexusAI
+      <section className="px-8 py-24 text-center">
+
+        <h2 className="text-6xl font-bold">
+          Premium
+          <span className="text-red-500"> IPTV</span>
+          Experience
         </h2>
 
-        <p className="mt-5 text-gray-400 text-xl">
-          Your intelligent platform for AI solutions,
-          automation and digital innovation.
+
+        <p className="max-w-3xl mx-auto mt-8 text-xl text-gray-400">
+
+          Watch your favourite entertainment,
+          sports and live channels on any device.
+
         </p>
 
+
+        <div className="flex justify-center gap-5 mt-10">
+
+
+          <Link href="/channels">
+
+            <button className="bg-red-600 px-8 py-4 rounded-xl hover:bg-red-700">
+
+              Browse Channels
+
+            </button>
+
+          </Link>
+
+
+
+          <Link href="/pricing">
+
+            <button className="border border-gray-700 px-8 py-4 rounded-xl hover:bg-gray-900">
+
+              View Plans
+
+            </button>
+
+          </Link>
+
+
+        </div>
+
+
       </section>
 
 
 
-      {/* Dashboard Cards */}
-      <section className="grid md:grid-cols-3 gap-8 px-10 pb-20">
+
+      {/* FEATURES */}
+
+      <section className="grid md:grid-cols-3 gap-8 px-8 pb-20">
 
 
-        <Link href="/assistant">
+        <div className="bg-gray-900 rounded-3xl p-8">
 
-          <div className="cursor-pointer bg-gray-900 border border-gray-800 rounded-3xl p-8 hover:border-blue-500 transition">
+          <div className="text-5xl">📺</div>
 
-            <div className="text-5xl mb-5">
-              🤖
-            </div>
+          <h3 className="text-2xl font-bold mt-4">
+            Live TV
+          </h3>
 
-            <h3 className="text-2xl font-bold">
-              AI Assistant
-            </h3>
+          <p className="text-gray-400 mt-3">
+            Access your favourite channels from one place.
+          </p>
 
-            <p className="mt-3 text-gray-400">
-              Chat with your intelligent AI assistant.
-              Get answers, ideas and solutions.
-            </p>
-
-          </div>
-
-        </Link>
+        </div>
 
 
 
+        <div className="bg-gray-900 rounded-3xl p-8">
 
-        <Link href="#">
+          <div className="text-5xl">⚡</div>
 
-          <div className="cursor-pointer bg-gray-900 border border-gray-800 rounded-3xl p-8 hover:border-blue-500 transition">
+          <h3 className="text-2xl font-bold mt-4">
+            Fast Streaming
+          </h3>
 
-            <div className="text-5xl mb-5">
-              ⚡
-            </div>
+          <p className="text-gray-400 mt-3">
+            Smooth playback on modern devices.
+          </p>
 
-            <h3 className="text-2xl font-bold">
-              Automation
-            </h3>
-
-            <p className="mt-3 text-gray-400">
-              Automate repetitive business tasks
-              and improve productivity.
-            </p>
-
-          </div>
-
-        </Link>
+        </div>
 
 
 
 
+        <div className="bg-gray-900 rounded-3xl p-8">
 
-        <Link href="#">
+          <div className="text-5xl">📱</div>
 
-          <div className="cursor-pointer bg-gray-900 border border-gray-800 rounded-3xl p-8 hover:border-blue-500 transition">
+          <h3 className="text-2xl font-bold mt-4">
+            All Devices
+          </h3>
 
-            <div className="text-5xl mb-5">
-              🌐
-            </div>
+          <p className="text-gray-400 mt-3">
+            Compatible with Smart TV, mobile and PC.
+          </p>
 
-            <h3 className="text-2xl font-bold">
-              Web Studio
-            </h3>
-
-            <p className="mt-3 text-gray-400">
-              Create modern websites and
-              digital experiences.
-            </p>
-
-          </div>
-
-        </Link>
-
-
-
-
-
-        <Link href="#">
-
-          <div className="cursor-pointer bg-gray-900 border border-gray-800 rounded-3xl p-8 hover:border-blue-500 transition">
-
-            <div className="text-5xl mb-5">
-              📊
-            </div>
-
-            <h3 className="text-2xl font-bold">
-              Analytics
-            </h3>
-
-            <p className="mt-3 text-gray-400">
-              Monitor performance and insights.
-            </p>
-
-          </div>
-
-        </Link>
-
-
-
-
-        <Link href="#">
-
-          <div className="cursor-pointer bg-gray-900 border border-gray-800 rounded-3xl p-8 hover:border-blue-500 transition">
-
-            <div className="text-5xl mb-5">
-              📁
-            </div>
-
-            <h3 className="text-2xl font-bold">
-              Projects
-            </h3>
-
-            <p className="mt-3 text-gray-400">
-              Manage your AI projects.
-            </p>
-
-          </div>
-
-        </Link>
-
-
-
-
-        <Link href="#">
-
-          <div className="cursor-pointer bg-gray-900 border border-gray-800 rounded-3xl p-8 hover:border-blue-500 transition">
-
-            <div className="text-5xl mb-5">
-              ⚙️
-            </div>
-
-            <h3 className="text-2xl font-bold">
-              Settings
-            </h3>
-
-            <p className="mt-3 text-gray-400">
-              Configure your NexusAI platform.
-            </p>
-
-          </div>
-
-        </Link>
-
+        </div>
 
 
       </section>
 
+
+
+
+      {/* FOOTER */}
 
       <footer className="border-t border-gray-800 text-center py-8 text-gray-500">
 
-        NexusAI © 2026
+        IPTVPLUS © 2026
 
       </footer>
 
