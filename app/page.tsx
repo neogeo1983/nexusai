@@ -2,99 +2,332 @@
 
 import { useState } from "react";
 
+type Channel = {
+  name: string;
+  category: string;
+  logo: string;
+  url: string;
+};
+
+
 export default function Channels() {
 
-  const [channel, setChannel] = useState(
-    "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8"
-  );
 
-  const channels = [
-    {
-      name: "Demo Channel 1",
-      url: "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8"
-    },
-    {
-      name: "Demo Channel 2",
-      url: "https://test-streams.mux.dev/test_001/stream.m3u8"
-    }
-  ];
+const channels: Channel[] = [
 
+{
+name:"Demo News",
+category:"News",
+logo:"📰",
+url:"https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8"
+},
 
-  return (
-    <main className="min-h-screen bg-black text-white p-8">
+{
+name:"Demo Movies",
+category:"Movies",
+logo:"🎬",
+url:"https://test-streams.mux.dev/test_001/stream.m3u8"
+},
 
-      <h1 className="text-5xl font-bold mb-8">
-        📺 Neon-IPTV Channels
-      </h1>
+{
+name:"Demo Sport",
+category:"Sport",
+logo:"⚽",
+url:"https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8"
+},
 
+{
+name:"Demo Music",
+category:"Music",
+logo:"🎵",
+url:"https://test-streams.mux.dev/test_001/stream.m3u8"
+}
 
-      <div className="grid lg:grid-cols-4 gap-6">
-
-
-        {/* CHANNEL LIST */}
-
-        <div className="bg-gray-900 rounded-2xl p-5">
-
-          <h2 className="text-xl font-bold mb-5">
-            Channels
-          </h2>
-
-
-          {channels.map((item,index)=>(
-
-            <button
-              key={index}
-              onClick={()=>setChannel(item.url)}
-              className="w-full text-left mb-3 p-4 rounded-xl bg-gray-800 hover:bg-red-600 transition"
-            >
-
-              📺 {item.name}
-
-            </button>
-
-          ))}
-
-
-        </div>
+];
 
 
 
-        {/* PLAYER */}
-
-        <div className="lg:col-span-3 bg-gray-900 rounded-3xl p-5">
-
-
-          <video
-            key={channel}
-            controls
-            autoPlay
-            className="w-full aspect-video rounded-2xl bg-black"
-          >
-
-            <source
-              src={channel}
-              type="application/x-mpegURL"
-            />
-
-          </video>
+const categories = [
+"All",
+"Romania",
+"News",
+"Sport",
+"Movies",
+"Music"
+];
 
 
-          <h2 className="text-2xl font-bold mt-5">
-            Neon-IPTV Player
-          </h2>
+const [selected,setSelected]=useState(channels[0]);
+
+const [search,setSearch]=useState("");
+
+const [category,setCategory]=useState("All");
 
 
-          <p className="text-gray-400 mt-2">
-            Selectează un canal pentru a începe redarea.
-          </p>
+
+const filteredChannels = channels.filter((channel)=>{
+
+const searchMatch =
+channel.name
+.toLowerCase()
+.includes(search.toLowerCase());
 
 
-        </div>
+const categoryMatch =
+category==="All" ||
+channel.category===category;
 
 
-      </div>
+return searchMatch && categoryMatch;
+
+});
 
 
-    </main>
-  );
+
+return (
+
+<main className="min-h-screen bg-black text-white p-6">
+
+
+<header className="mb-8">
+
+<h1 className="text-5xl font-bold">
+
+<span className="text-red-600">
+Neon
+</span>
+-IPTV
+
+</h1>
+
+<p className="text-gray-400 mt-2">
+Live TV Experience
+</p>
+
+</header>
+
+
+
+
+<div className="grid lg:grid-cols-4 gap-6">
+
+
+
+{/* MENU */}
+
+<section className="bg-gray-900 rounded-3xl p-5">
+
+
+<input
+
+placeholder="Search channel..."
+
+value={search}
+
+onChange={(e)=>setSearch(e.target.value)}
+
+className="w-full bg-black border border-gray-700 rounded-xl p-3 mb-5"
+
+/>
+
+
+
+<div className="flex flex-wrap gap-2 mb-6">
+
+{categories.map((cat)=>(
+
+<button
+
+key={cat}
+
+onClick={()=>setCategory(cat)}
+
+className={`
+px-4 py-2 rounded-full
+${category===cat
+?"bg-red-600"
+:"bg-gray-800"}
+`}
+
+>
+
+{cat}
+
+</button>
+
+))}
+
+
+</div>
+
+
+
+<h2 className="text-xl font-bold mb-4">
+
+Channels
+
+</h2>
+
+
+
+<div className="space-y-3">
+
+
+{filteredChannels.map((channel)=>(
+
+
+<button
+
+key={channel.name}
+
+onClick={()=>setSelected(channel)}
+
+className="w-full flex items-center gap-4 
+bg-gray-800 hover:bg-red-600 
+rounded-xl p-4 transition"
+
+>
+
+
+<span className="text-3xl">
+
+{channel.logo}
+
+</span>
+
+
+<div className="text-left">
+
+<div className="font-bold">
+
+{channel.name}
+
+</div>
+
+
+<div className="text-sm text-gray-400">
+
+{channel.category}
+
+</div>
+
+
+</div>
+
+
+</button>
+
+
+))}
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+{/* PLAYER */}
+
+
+<section className="lg:col-span-3 bg-gray-900 rounded-3xl p-5">
+
+
+<div className="bg-black rounded-2xl overflow-hidden">
+
+
+<video
+
+key={selected.url}
+
+controls
+
+autoPlay
+
+className="w-full aspect-video"
+
+>
+
+<source
+
+src={selected.url}
+
+type="application/x-mpegURL"
+
+/>
+
+
+</video>
+
+
+</div>
+
+
+
+
+<div className="mt-6">
+
+
+<h2 className="text-3xl font-bold">
+
+{selected.logo} {selected.name}
+
+</h2>
+
+
+<p className="text-gray-400 mt-2">
+
+Categorie:
+{selected.category}
+
+</p>
+
+
+
+<button
+
+onClick={()=>{
+
+const video =
+document.querySelector("video");
+
+if(video?.requestFullscreen){
+
+video.requestFullscreen();
+
+}
+
+}}
+
+className="mt-5 bg-red-600 px-6 py-3 rounded-xl"
+
+>
+
+⛶ Fullscreen
+
+</button>
+
+
+</div>
+
+
+
+</section>
+
+
+
+</div>
+
+
+
+</main>
+
+
+);
+
+
 }
