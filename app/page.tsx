@@ -4,143 +4,110 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-black text-white">
 
-      {/* HEADER */}
-      <header className="flex items-center justify-between px-8 py-6 border-b border-gray-800">
-
-        <h1 className="text-3xl font-bold">
-          IPTV<span className="text-red-500">PLUS</span>
+      <header className="flex justify-between items-center px-8 py-6 border-b border-red-900">
+        <h1 className="text-4xl font-bold">
+          Neon<span className="text-red-600">-IPTV</span>
         </h1>
 
-        <nav className="flex gap-6 text-gray-300">
+        <nav className="flex gap-5">
           <Link href="/">Home</Link>
           <Link href="/channels">Channels</Link>
-          <Link href="/pricing">Plans</Link>
-          <Link href="/contact">Contact</Link>
+          <Link href="/player">Player</Link>
+          <Link href="/pricing">Abonamente</Link>
+          <Link href="/movies">Filme</Link>
         </nav>
-
       </header>
 
-
-      {/* HERO */}
 
       <section className="px-8 py-24 text-center">
 
         <h2 className="text-6xl font-bold">
-          Premium
-          <span className="text-red-500"> IPTV</span>
-          Experience
+          Your Ultimate
+          <span className="text-red-600"> TV Experience</span>
         </h2>
 
-
-        <p className="max-w-3xl mx-auto mt-8 text-xl text-gray-400">
-
-          Watch your favourite entertainment,
-          sports and live channels on any device.
-
+        <p className="mt-6 text-xl text-gray-400">
+          Neon-IPTV brings entertainment, movies and live television
+          to all your devices.
         </p>
 
 
-        <div className="flex justify-center gap-5 mt-10">
-
+        <div className="mt-10 flex justify-center gap-5">
 
           <Link href="/channels">
-
-            <button className="bg-red-600 px-8 py-4 rounded-xl hover:bg-red-700">
-
-              Browse Channels
-
+            <button className="bg-red-600 px-8 py-4 rounded-xl">
+              Watch TV
             </button>
-
           </Link>
-
 
 
           <Link href="/pricing">
-
-            <button className="border border-gray-700 px-8 py-4 rounded-xl hover:bg-gray-900">
-
-              View Plans
-
+            <button className="border border-gray-600 px-8 py-4 rounded-xl">
+              Choose Plan
             </button>
-
           </Link>
 
-
         </div>
-
 
       </section>
 
 
 
+      <section className="grid md:grid-cols-3 gap-8 px-8">
 
-      {/* FEATURES */}
+        <Card
+          icon="📺"
+          title="Live Channels"
+          text="Watch your favourite channels in one place."
+        />
 
-      <section className="grid md:grid-cols-3 gap-8 px-8 pb-20">
+        <Card
+          icon="🎬"
+          title="Movies"
+          text="Enjoy your entertainment collection."
+        />
 
-
-        <div className="bg-gray-900 rounded-3xl p-8">
-
-          <div className="text-5xl">📺</div>
-
-          <h3 className="text-2xl font-bold mt-4">
-            Live TV
-          </h3>
-
-          <p className="text-gray-400 mt-3">
-            Access your favourite channels from one place.
-          </p>
-
-        </div>
-
-
-
-        <div className="bg-gray-900 rounded-3xl p-8">
-
-          <div className="text-5xl">⚡</div>
-
-          <h3 className="text-2xl font-bold mt-4">
-            Fast Streaming
-          </h3>
-
-          <p className="text-gray-400 mt-3">
-            Smooth playback on modern devices.
-          </p>
-
-        </div>
-
-
-
-
-        <div className="bg-gray-900 rounded-3xl p-8">
-
-          <div className="text-5xl">📱</div>
-
-          <h3 className="text-2xl font-bold mt-4">
-            All Devices
-          </h3>
-
-          <p className="text-gray-400 mt-3">
-            Compatible with Smart TV, mobile and PC.
-          </p>
-
-        </div>
-
+        <Card
+          icon="📱"
+          title="All Devices"
+          text="Smart TV, Android, iOS, Windows and more."
+        />
 
       </section>
 
 
-
-
-      {/* FOOTER */}
-
-      <footer className="border-t border-gray-800 text-center py-8 text-gray-500">
-
-        IPTVPLUS © 2026
-
+      <footer className="mt-20 py-8 text-center border-t border-gray-800">
+        Neon-IPTV © 2026
       </footer>
-
 
     </main>
   );
+}
+
+
+
+function Card({icon,title,text}:{
+icon:string;
+title:string;
+text:string;
+}){
+
+return (
+
+<div className="bg-gray-900 rounded-3xl p-8 hover:border-red-600 border border-gray-800">
+
+<div className="text-5xl">{icon}</div>
+
+<h3 className="text-2xl font-bold mt-5">
+{title}
+</h3>
+
+<p className="text-gray-400 mt-3">
+{text}
+</p>
+
+</div>
+
+)
+
 }
